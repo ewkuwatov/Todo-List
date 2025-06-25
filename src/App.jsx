@@ -1,6 +1,6 @@
 // App.jsx
-
 import { useEffect, useState } from "react"
+import TodoItem from "./components/TodoItem"
 
 function App() {
   const [task, setTask] = useState("")
@@ -50,82 +50,22 @@ function App() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-lg max-w-md p-6">
-        <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Todo List
-        </h1>
+    <div className="min-h-screen bg-gray-800 flex items-center justify-center p-4">
+        <TodoItem
+          task={task}
+          setTask={setTask}
 
-        <form onSubmit={addTask} className="flex gap-2 mb-4">
-          <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Введите задачу..."
-          />
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-            Add
-          </button>
-        </form>
+          todos={todos}
+          setTodos={setTodos}
+          
+          filter={filter}
+          setFilter={setFilter}
 
-        <div className="flex justify-center gap-2 mb-4">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-3 py-1 rounded-md text-sm ${
-              filter === 'all'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setFilter('active')}
-            className={`px-3 py-1 rounded-md text-sm ${
-              filter === 'active'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            Active
-          </button>
-          <button
-            onClick={() => setFilter('completed')}
-            className={`px-3 py-1 rounded-md text-sm ${
-              filter === 'completed'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            Completed
-          </button>
-        </div>
-
-        <ul className="space-y-2">
-          {filterTask.map((todo) => (
-            <li
-              key={todo.id}
-              className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-md shadow-sm"
-            >
-              <span
-                onClick={() => toggleTask(todo.id)}
-                className={`cursor-pointer flex-1 ${
-                  todo.completed ? 'line-through text-gray-400' : ''
-                }`}
-              >
-                {todo.text}
-              </span>
-              <button
-                onClick={() => deleteTask(todo.id)}
-                className="text-red-500 hover:text-red-700 text-sm ml-4"
-              >
-                delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+          addTask={addTask}
+          toggleTask={toggleTask}
+          deleteTask={deleteTask}
+          filterTask={filterTask}
+        />
     </div>
   )
 }
