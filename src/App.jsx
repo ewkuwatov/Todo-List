@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 function App() {
   const [task, setTask] = useState("")
   const [todos, setTodos] = useState([])
+  const [filter, setFilter] = useState('all')
 
   useEffect(() => {
     const stored = localStorage.getItem('todos')
@@ -40,8 +41,13 @@ function App() {
 
   const deleteTask = (id) => {
     setTodos(todos.filter(todo => (todo.id !== id)))
-
   }
+
+  const filterTask = todos.filter(todo => {
+    if(filter === 'active') return !todo.completed
+    if(filter === 'completed') return todo.completed
+    return true
+  })
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
@@ -62,8 +68,42 @@ function App() {
             Add
           </button>
         </form>
+
+        <div className="flex justify-center gap-2 mb-4">
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-3 py-1 rounded-md text-sm ${
+              filter === 'all'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-800'
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setFilter('active')}
+            className={`px-3 py-1 rounded-md text-sm ${
+              filter === 'active'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-800'
+            }`}
+          >
+            Active
+          </button>
+          <button
+            onClick={() => setFilter('completed')}
+            className={`px-3 py-1 rounded-md text-sm ${
+              filter === 'completed'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-800'
+            }`}
+          >
+            Completed
+          </button>
+        </div>
+
         <ul className="space-y-2">
-          {todos.map((todo) => (
+          {filterTask.map((todo) => (
             <li
               key={todo.id}
               className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-md shadow-sm"
