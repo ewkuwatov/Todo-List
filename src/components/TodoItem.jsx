@@ -12,6 +12,7 @@ const TodoItem = ({
   toggleTask,
   deleteTask,
   filterTask,
+  loading,
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg max-w-md p-6">
@@ -19,7 +20,7 @@ const TodoItem = ({
         Todo List
       </h1>
 
-      <TodoInput task={task} setTask={setTask} addTask={addTask} />
+      <TodoInput task={task} setTask={setTask} addTask={addTask} loading={loading} />
       <FilterButtons filter={filter} setFilter={setFilter} />
       <TodoList
         toggleTask={toggleTask}

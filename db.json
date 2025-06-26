@@ -1,0 +1,37 @@
+{
+  "todos": [
+    {
+      "id": "9449",
+      "text": "Clear Water",
+      "done": true
+    },
+    {
+      "id": "ed97",
+      "text": "Apple 3kg",
+      "done": false,
+      "completed": true
+    },
+    {
+      "id": "5ef7",
+      "text": "Milk 2%",
+      "done": false,
+      "completed": true
+    },
+    {
+      "id": "eaaf",
+      "text": "Cake",
+      "done": true,
+      "completed": true
+    },
+    {
+      "id": "f0cd",
+      "text": "Malone",
+      "done": true
+    },
+    {
+      "id": "7152",
+      "text": "привет",
+      "done": true
+    }
+  ]
+}

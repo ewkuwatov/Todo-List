@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 
-const TodoInput = ({ task, setTask, addTask }) => {
+const TodoInput = ({ task, setTask, addTask, loading }) => {
   return (
     <form onSubmit={addTask} className="flex gap-2 mb-4">
       <input
@@ -11,9 +11,12 @@ const TodoInput = ({ task, setTask, addTask }) => {
         placeholder="Введите задачу..."
       />
       <motion.button
+        disabled={loading}
+        className={`bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition ${
+          loading ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
       >
         Add
       </motion.button>
