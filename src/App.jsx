@@ -7,6 +7,10 @@ function App() {
   const [todos, setTodos] = useState([])
   const [filter, setFilter] = useState('all')
 
+  const [editingId, setEditingId] = useState(null) // вместо isEditing
+  const [edit, setEdit] = useState('')
+  
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -14,7 +18,7 @@ function App() {
     const fetchTodos = async () => {
       try {
         setLoading(true)
-        const res = await fetch('http://localhost:3001/todos')
+        const res = await fetch('http://localhost:3000/todos')
 
         if (!res.ok) throw new Error('Ошибка загрузки задач')
 
@@ -32,18 +36,18 @@ function App() {
   }, [])
   
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const res = await fetch('http://localhost:3001/todos')
-        const data = await res.json()
-        setTodos(data)
-      } catch (error) {
-        console.error('Ошибка при загрузке задач:', error)
-      }
-    }
-    fetchTodos()
-  }, [])
+  // useEffect(() => {
+  //   const fetchTodos = async () => {
+  //     try {
+  //       const res = await fetch('http://localhost:3000/todos')
+  //       const data = await res.json()
+  //       setTodos(data)
+  //     } catch (error) {
+  //       console.error('Ошибка при загрузке задач:', error)
+  //     }
+  //   }
+  //   fetchTodos()
+  // }, [])
 
   const addTask = async (e) => {
     e.preventDefault()
@@ -55,7 +59,7 @@ function App() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/todos', {
+      const res = await fetch('http://localhost:3000/todos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTodo),
@@ -71,7 +75,7 @@ function App() {
 
   const deleteTask = async (id) => {
     try {
-      await fetch(`http://localhost:3001/todos/${id}`, {
+      await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'DELETE',
       })
       setTodos(todos.filter(t => t.id !== id))
@@ -85,7 +89,7 @@ function App() {
     if(!todo) return 
     
     try {
-      const res = await fetch(`http://localhost:3001/todos/${id}`, {
+      const res = await fetch(`http://localhost:3000/todos/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !todo.completed }),
@@ -95,6 +99,21 @@ function App() {
       setTodos(todos.map(t => t.id === id ? updated : t))
     } catch (error) {
       console.error('Ошибка при переключении состояния:', error)
+    }
+  }
+
+  const editTask = async (id, edit) => {
+    try {
+      const res = await fetch(`http://localhost:3000/todos/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: edit }),
+      })
+
+      const updated = await res.json()
+      setTodos(todos.map((t) => (t.id === id ? updated : t)))
+    } catch (error) {
+      console.error('Ошибка при редактировании задачи:', error)
     }
   }
   
@@ -111,11 +130,9 @@ function App() {
           Загрузка...
         </div>
       )}
-
       {error && (
         <div className="text-red-400 text-center mb-4">Ошибка: {error}</div>
       )}
-
       <TodoItem
         task={task}
         setTask={setTask}
@@ -126,8 +143,13 @@ function App() {
         addTask={addTask}
         toggleTask={toggleTask}
         deleteTask={deleteTask}
+        editTask={editTask}
         filterTask={filterTask}
         loading={loading}
+        edit={edit}
+        setEdit={setEdit}
+        editingId={editingId}
+        setEditingId={setEditingId}
       />
     </div>
   )

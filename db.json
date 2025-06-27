@@ -2,36 +2,28 @@
   "todos": [
     {
       "id": "9449",
-      "text": "Clear Water",
-      "done": true
+      "text": "Clear Water 1L",
+      "completed": false
     },
     {
       "id": "ed97",
       "text": "Apple 3kg",
-      "done": false,
-      "completed": true
+      "completed": false
     },
     {
       "id": "5ef7",
       "text": "Milk 2%",
-      "done": false,
-      "completed": true
+      "completed": false
     },
     {
       "id": "eaaf",
-      "text": "Cake",
-      "done": true,
+      "text": "Cake Sneakers",
       "completed": true
     },
     {
       "id": "f0cd",
       "text": "Malone",
-      "done": true
-    },
-    {
-      "id": "7152",
-      "text": "привет",
-      "done": true
+      "completed": false
     }
   ]
 }
